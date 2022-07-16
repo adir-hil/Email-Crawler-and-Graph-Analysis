@@ -27,13 +27,14 @@ The crawler is based on a scrapy library. It starts from the seeds and crawls us
 All the yielded items are stored in a CSV file (stated in the scraped_data_filename argument).
 
 # Graph generation and analysis(Graph class)
-The generated graph utilizes the Networkx library. It receives the CSV from the crawler as input and scans each row (item). Each unique URL or link is a node (a URL can also be a link and vice-versa), each node includes a domain and  a set of emails as attributes (nodes' labels are sequential integers for convenience, the URL value is stored as another attribute but acts as an identifier). An edge is a relationship between each URL and the links found on that URL (URL-> Link), so the graph is directed (Digraph), the direction is important for betweenness centrality calculation.</br>
+The generated graph utilizes the Networkx library. It receives the CSV from the crawler as input and scans each row (item). Each unique URL or link is a node (a URL can also be a link and vice-versa), each node includes a domain and  a set of emails as attributes (nodes' labels are sequential integers for convenience, the URL value is stored as another attribute but acts as an identifier). An edge is a relationship between each URL and the links found on that URL (URL-> Link), so the graph is directed (Digraph), the direction is important for betweenness and closeness centrality calculation.</br>
 **Important note:** links that were scraped but not visited during the crawl were also added to the graph as nodes (with an empty email attribute). The rationale was that if a URL with an email has many links that were not visited, we want to reflect its centrality by creating nodes for each of its links as neighbors.
 
 # The 5 most important emails per domain
 
-Each email was assigned a score, score ranking was used to determine email importance.
+Each email was assigned a score which was used to rank email importance in each domain.
 
-Score(email)= ∑ DC(i_email )+CC(i_email )+BC(i_email)
+![score_formula](https://user-images.githubusercontent.com/75641817/179371553-7a85d317-4034-40c2-ac64-427867238542.png)
+
 
 For each domain, a subgraph of the global graph was created and Degree Centrality (DC), Closeness Centrality (CC), and Betweenness Centrality (BC) were calculated for each node in that graph. The sum of these 3 metrics is the importance score for node i. the score of an email is the sum of all node's scores that include this email in this domain. 
