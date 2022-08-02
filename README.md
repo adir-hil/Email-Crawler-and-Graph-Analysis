@@ -24,7 +24,7 @@ The crawler is implemented via the EmailSpider class, its constructer requires t
 | *force_exit** | Bool | N | Whether to force crawler to exit aggressively when bandwidth is exhausted (display harmless error and exits immediately) or wait until all requests in the queue are cleared (no error is displayed  but very slow)  | True |
 
 *This parameters was added since the spider cannot be stopped immeditaly when it reaches the bandwith limit without displaying an excpetion.
-This issue is known and reported on https://github.com/scrapy/scrapy/issues/5437, it sechduled to be fixed the next scrapy version (2.6.2). a fix  is already available (pip install -e git+ssh://git@github.com/scrapy/scrapy.git@2.6#egg=scrapy)   but wasn't implement due to compatiblity issues
+This issue is known and reported on https://github.com/scrapy/scrapy/issues/5437, it scheduled to be fixed the next scrapy version (2.6.2). a fix  is already available (pip install -e git+ssh://git@github.com/scrapy/scrapy.git@2.6#egg=scrapy)   but wasn't implemented due to compatiblity issues
 
 # Crawler mechanism (EmailSpider class)
 The crawler is based on a scrapy library. It starts from the seeds and crawls using a BFS traversal. The scraping process targets links (via href tags) and emails (via regex) on each crawled page.  An item is yielded for each found link, its structure can be seen as a dictionary:</br>  
